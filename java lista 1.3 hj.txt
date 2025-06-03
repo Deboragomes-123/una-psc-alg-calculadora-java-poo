@@ -1,0 +1,20 @@
+// A Divisão também segue o molde e tem seu jeito de calcular.
+public class Divisao extends OperacaoMatematica {
+    public Divisao(double numeroUm, double numeroDois) {
+        super(numeroUm, numeroDois);
+    }
+
+    @Override
+    public double calcular() {
+        if (numeroDois == 0) {
+            System.out.println("Impossível realizar uma divisão por zero.");
+            return Double.NaN; // Retorna "Não é um Número" para indicar erro
+        }
+        return numeroUm / numeroDois;
+    }
+
+    @Override
+    public String toString() {
+        return "Divisao []";
+    }
+}

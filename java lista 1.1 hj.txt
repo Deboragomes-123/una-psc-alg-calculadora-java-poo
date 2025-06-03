@@ -1,0 +1,39 @@
+ // Este é o "molde" para todas as operações.
+// Ele diz que toda operação TEM QUE ter um método 'calcular()'.
+public abstract class OperacaoMatematica {
+    protected double numeroUm;
+    protected double numeroDois; // Nem toda operação usa, mas simplifica aqui.
+
+    // Construtor para operações com dois números (soma, subtracao)
+    public OperacaoMatematica(double numeroUm, double numeroDois) {
+        this.numeroUm = numeroUm;
+        this.numeroDois = numeroDois;
+    }
+
+    // Construtor para operações com apenas um número (raiz quadrada)
+    public OperacaoMatematica(double numeroUm) {
+        this.numeroUm = numeroUm;
+        this.numeroDois = 0; // Define como 0, pois não será usado
+    }
+
+    // Este método é abstrato: cada operação filha VAI IMPLEMENTAR o seu próprio cálculo.
+    public abstract double calcular();
+}
+2. Exemplos de Operações (Classes que seguem o molde)
+Crie um arquivo .java para cada operação.
+
+Adicao.java
+
+Java
+
+// A Adição segue o molde da OperacaoMatematica e diz COMO ela calcula.
+public class Adicao extends OperacaoMatematica {
+    public Adicao(double numeroUm, double numeroDois) {
+        super(numeroUm, numeroDois); // Chama o construtor do "molde"
+    }
+
+    @Override // Estamos "sobrescrevendo" o método calcular do molde
+    public double calcular() {
+        return numeroUm + numeroDois;
+    }
+}

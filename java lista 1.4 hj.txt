@@ -1,0 +1,75 @@
+import java.util.InputMismatchException; // Para pegar erros de digitação
+import java.util.Scanner; // Para ler o que o usuário digita
+
+public class Calculadora {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Objeto para ler a entrada
+        String opcao = ""; // Variável para guardar a opção do usuário
+
+        System.out.println("Bem-vindo à Calculadora POO!");
+
+        // Loop principal: continua enquanto o usuário não digitar 'Q'
+        while (!opcao.equalsIgnoreCase("Q")) { // 'equalsIgnoreCase' ignora maiúsculas/minúsculas
+            System.out.println("\nEscolha uma operação:");
+            System.out.println("+ para Adição");
+            System.out.println("/ para Divisão");
+            System.out.println("R para Raiz Quadrada");
+            // ... (coloque as outras opções aqui)
+            System.out.println("Q para Sair");
+            System.out.print("Sua opção: ");
+
+            opcao = scanner.next(); // Lê a próxima palavra (a opção do usuário)
+
+            if (opcao.equalsIgnoreCase("Q")) {
+                System.out.println("Saindo da calculadora. Até mais!");
+                break; // Sai do loop
+            }
+
+            try {
+                double numeroUm, numeroDois;
+                OperacaoMatematica operacao = null; // Um objeto do tipo "molde"
+
+                // Se for Raiz Quadrada, só pede um número
+                if (opcao.equalsIgnoreCase("R")) {
+                    System.out.print("Digite o número para a raiz quadrada: ");
+                    numeroUm = scanner.nextDouble();
+                    operacao = new RaizQuadrada(numeroUm); // Cria um objeto RaizQuadrada
+                } else { // Para as outras operações, pede dois números
+                    System.out.print("Digite o primeiro número: ");
+                    numeroUm = scanner.nextDouble();
+                    System.out.print("Digite o segundo número: ");
+                    numeroDois = scanner.nextDouble();
+
+                    switch (opcao) {
+                        case "+":
+                            operacao = new Adicao(numeroUm, numeroDois); // Cria um objeto Adicao
+                            break;
+                        case "/":
+                            operacao = new Divisao(numeroUm, numeroDois); // Cria um objeto Divisao
+                            break;
+                        // ... (adicione os 'case' para as outras operações aqui)
+                        default:
+                            System.out.println("Opção inválida. Tente novamente.");
+                            continue; // Volta para o início do loop
+                    }
+                }
+
+                if (operacao != null) {
+                    // Chama o método 'calcular()' do objeto que foi criado (Adicao, Divisao, etc.)
+                    double resultado = operacao.calcular();
+                    // Double.isNaN verifica se o resultado é "Não é um Número" (erro)
+                    if (!Double.isNaN(resultado)) {
+                        System.out.println("Resultado: " + resultado);
+                    }
+                }
+
+            } catch (InputMismatchException e) {
+                // Pega o erro se o usuário digitar texto onde deveria ser número
+                System.out.println("Entrada inválida. Por favor, digite apenas números.");
+                scanner.next(); // Limpa o que foi digitado de errado para não travar
+            }
+        }
+        scanner.close(); // Fecha o leitor de entrada
+    }
+}
